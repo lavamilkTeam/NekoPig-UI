@@ -143,29 +143,39 @@ Basic.Button {
                 }
             }
 
-            Rectangle {
+            component SquareOutline: Shape {
+                id: square
+                property color fill: "transparent"
+                antialiasing: true
+                preferredRendererType: Shape.CurveRenderer
+
+                ShapePath {
+                    strokeColor: "#000000"
+                    strokeWidth: 1.3
+                    fillColor: square.fill
+                    joinStyle: ShapePath.MiterJoin
+                    startX: 0.65
+                    startY: 0.65
+
+                    PathLine { x: square.width - 0.65; y: 0.65 }
+                    PathLine { x: square.width - 0.65; y: square.height - 0.65 }
+                    PathLine { x: 0.65; y: square.height - 0.65 }
+                    PathLine { x: 0.65; y: 0.65 }
+                }
+            }
+
+            SquareOutline {
                 x: 2
                 width: glyph.width - 2
                 height: glyph.height - 2
-                color: "transparent"
-                border.color: "#000000"
-                border.width: 1.3
-                border.pixelAligned: false
-                radius: 0.5
-                antialiasing: true
                 visible: control.operation === WindowButton.Maximize && control.maximized
             }
 
-            Rectangle {
+            SquareOutline {
                 y: control.maximized ? 2 : 0
                 width: glyph.width - (control.maximized ? 2 : 0)
                 height: glyph.height - (control.maximized ? 2 : 0)
-                color: disc.color
-                border.color: "#000000"
-                border.width: 1.3
-                border.pixelAligned: false
-                radius: 0.5
-                antialiasing: true
+                fill: disc.color
                 visible: control.operation === WindowButton.Maximize
             }
         }

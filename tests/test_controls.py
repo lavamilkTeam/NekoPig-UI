@@ -2,6 +2,7 @@
 """Exercise the installed-style module import and observable input behavior."""
 
 import unittest
+from itertools import product
 from pathlib import Path
 
 from PySide6.QtCore import Q_ARG, QMetaObject, QPoint, Qt, QUrl
@@ -109,30 +110,36 @@ class ControlsTest(unittest.TestCase):
     def test_window_symbols_are_centered_in_rendered_discs(self):
         button = self.window.findChild(QQuickItem, "standaloneClose")
         QTest.mouseMove(self.window, QPoint(350, 50))
-        for diameter in (18, 24):
-            button.setProperty("diameter", diameter)
-            for operation in (0, 1, 2):
-                with self.subTest(diameter=diameter, operation=operation):
-                    button.setProperty("operation", operation)
-                    QTest.qWait(100)
-                    image = self.window.grabWindow()
-                    ratio = image.width() / self.window.width()
-                    disc, ink = [], []
-                    for y in range(round(230 * ratio), round((230 + button.height()) * ratio)):
-                        for x in range(round(180 * ratio), round((180 + button.width()) * ratio)):
-                            color = image.pixelColor(x, y)
-                            rgb = (color.red(), color.green(), color.blue())
-                            if max(rgb) - min(rgb) > 80:
-                                disc.append((x + 0.5, y + 0.5))
-                            if max(rgb) < 80:
-                                ink.append((x + 0.5, y + 0.5))
-                    self.assertTrue(disc, "Colored disc was not rendered")
-                    self.assertTrue(ink, "Black symbol was not rendered")
-                    for axis in (0, 1):
-                        disc_center = (min(p[axis] for p in disc) + max(p[axis] for p in disc)) / 2
-                        ink_center = (min(p[axis] for p in ink) + max(p[axis] for p in ink)) / 2
-                        self.assertAlmostEqual(ink_center, disc_center, delta=0.25,
-                            msg=f"Symbol center differs on axis {axis} at scale {ratio}")
+        states = ((0, False), (1, False), (2, False), (2, True))
+        for diameter, (operation, maximized), (left, top) in product(
+            (18, 24), states, ((180, 230), (181, 231))
+        ):
+            with self.subTest(diameter=diameter, operation=operation,
+                              maximized=maximized, position=(left, top)):
+                button.setProperty("diameter", diameter)
+                button.setProperty("operation", operation)
+                button.setProperty("maximized", maximized)
+                button.setX(left)
+                button.setY(top)
+                QTest.qWait(100)
+                image = self.window.grabWindow()
+                ratio = image.width() / self.window.width()
+                disc, ink = [], []
+                for y in range(round(top * ratio), round((top + button.height()) * ratio)):
+                    for x in range(round(left * ratio), round((left + button.width()) * ratio)):
+                        color = image.pixelColor(x, y)
+                        rgb = (color.red(), color.green(), color.blue())
+                        if max(rgb) - min(rgb) > 80:
+                            disc.append((x + 0.5, y + 0.5))
+                        if max(rgb) < 80:
+                            ink.append((x + 0.5, y + 0.5))
+                self.assertTrue(disc, "Colored disc was not rendered")
+                self.assertTrue(ink, "Black symbol was not rendered")
+                for axis in (0, 1):
+                    disc_center = (min(p[axis] for p in disc) + max(p[axis] for p in disc)) / 2
+                    ink_center = (min(p[axis] for p in ink) + max(p[axis] for p in ink)) / 2
+                    self.assertAlmostEqual(ink_center, disc_center, delta=0.25,
+                        msg=f"Symbol center differs on axis {axis} at scale {ratio}")
 
 
 if __name__ == "__main__":
