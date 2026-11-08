@@ -14,6 +14,8 @@ Basic.Button {
     implicitWidth: Math.max(32, diameter + 10)
     implicitHeight: Math.max(32, diameter + 10)
     padding: 0
+    horizontalPadding: 0
+    verticalPadding: 0
     hoverEnabled: true
     text: operation === WindowButton.Close ? qsTr("Close")
         : operation === WindowButton.Minimize ? qsTr("Minimize")
@@ -64,7 +66,9 @@ Basic.Button {
             id: glyph
             anchors.centerIn: parent
             anchors.alignWhenCentered: false
-            width: control.diameter * 0.45
+            // Keep the symbol extent even in device pixels to avoid one-sided raster rounding.
+            readonly property real pixelRatio: Screen.devicePixelRatio
+            width: Math.max(2, Math.round(control.diameter * 0.45 * pixelRatio / 2) * 2) / pixelRatio
             height: width
 
             Rectangle {
@@ -117,6 +121,7 @@ Basic.Button {
                 color: "transparent"
                 border.color: "#000000"
                 border.width: 1.3
+                border.pixelAligned: false
                 radius: 0.5
                 antialiasing: true
                 visible: control.operation === WindowButton.Maximize && control.maximized
@@ -129,6 +134,7 @@ Basic.Button {
                 color: disc.color
                 border.color: "#000000"
                 border.width: 1.3
+                border.pixelAligned: false
                 radius: 0.5
                 antialiasing: true
                 visible: control.operation === WindowButton.Maximize
