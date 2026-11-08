@@ -27,6 +27,7 @@ Basic.Button {
     background: Item {
         Rectangle {
             anchors.centerIn: parent
+            anchors.alignWhenCentered: false
             width: control.diameter + 6
             height: width
             radius: width / 2
@@ -40,6 +41,7 @@ Basic.Button {
         Rectangle {
             id: disc
             anchors.centerIn: parent
+            anchors.alignWhenCentered: false
             width: control.diameter
             height: width
             radius: width / 2
@@ -61,29 +63,51 @@ Basic.Button {
         Item {
             id: glyph
             anchors.centerIn: parent
+            anchors.alignWhenCentered: false
             width: control.diameter * 0.45
             height: width
 
             Rectangle {
                 anchors.centerIn: parent
+                anchors.alignWhenCentered: false
                 width: glyph.width
                 height: 1.5
                 radius: height / 2
-                rotation: control.operation === WindowButton.Close ? 45 : 0
                 color: "#000000"
                 antialiasing: true
-                visible: control.operation !== WindowButton.Maximize
+                visible: control.operation === WindowButton.Minimize
             }
 
-            Rectangle {
-                anchors.centerIn: parent
-                width: glyph.width
-                height: 1.5
-                radius: height / 2
-                rotation: -45
-                color: "#000000"
-                antialiasing: true
+            Item {
+                anchors.fill: parent
                 visible: control.operation === WindowButton.Close
+
+                component DiagonalStroke: Item {
+                    id: stroke
+
+                    Rectangle {
+                        anchors.centerIn: parent
+                        anchors.alignWhenCentered: false
+                        width: stroke.width
+                        height: 1.5
+                        radius: height / 2
+                        rotation: 45
+                        color: "#000000"
+                        antialiasing: true
+                    }
+                }
+
+                DiagonalStroke {
+                    anchors.fill: parent
+                }
+
+                DiagonalStroke {
+                    anchors.fill: parent
+                    transform: Scale {
+                        origin.x: glyph.width / 2
+                        xScale: -1
+                    }
+                }
             }
 
             Rectangle {
