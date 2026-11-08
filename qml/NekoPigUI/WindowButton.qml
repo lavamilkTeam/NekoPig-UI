@@ -153,14 +153,14 @@ Basic.Button {
                     strokeColor: "#000000"
                     strokeWidth: 1.3
                     fillColor: square.fill
-                    joinStyle: ShapePath.MiterJoin
-                    startX: 0.65
-                    startY: 0.65
 
-                    PathLine { x: square.width - 0.65; y: 0.65 }
-                    PathLine { x: square.width - 0.65; y: square.height - 0.65 }
-                    PathLine { x: 0.65; y: square.height - 0.65 }
-                    PathLine { x: 0.65; y: 0.65 }
+                    PathRectangle {
+                        x: 0.65
+                        y: 0.65
+                        width: square.width - 1.3
+                        height: square.height - 1.3
+                        radius: 1.2
+                    }
                 }
             }
 
