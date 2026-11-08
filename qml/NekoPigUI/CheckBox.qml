@@ -23,13 +23,13 @@ Basic.CheckBox {
             : control.checkState !== Qt.Unchecked ? Theme.accent : Theme.surface
         border.width: control.visualFocus ? 2 : 1
         border.color: !control.visualFocus ? Theme.border
-            : control.checkState === Qt.Unchecked ? Theme.accent : Theme.onAccent
+            : control.checkState === Qt.Unchecked ? Theme.accent : Theme.accentText
 
         Text {
             anchors.centerIn: parent
             text: control.checkState === Qt.PartiallyChecked ? "−" : "✓"
             visible: control.checkState !== Qt.Unchecked
-            color: control.enabled ? Theme.onAccent : Theme.mutedText
+            color: control.enabled ? Theme.accentText : Theme.mutedText
             font.pixelSize: 16
         }
     }

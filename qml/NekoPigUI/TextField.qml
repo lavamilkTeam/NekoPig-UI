@@ -17,7 +17,7 @@ Basic.TextField {
     color: enabled ? Theme.text : Theme.mutedText
     placeholderTextColor: Theme.mutedText
     selectionColor: Theme.accent
-    selectedTextColor: Theme.onAccent
+    selectedTextColor: Theme.accentText
 
     background: Rectangle {
         radius: Theme.radius

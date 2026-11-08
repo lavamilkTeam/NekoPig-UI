@@ -3,9 +3,13 @@ pragma Singleton
 import QtQuick
 
 QtObject {
+    id: theme
+
     property bool dark: false
     property color accent: dark ? "#FFFFFF" : "#303030"
-    property color onAccent: dark ? "#303030" : "#FFFFFF"
+    property color accentText: dark ? "#303030" : "#FFFFFF"
+    // Preserve existing readers while avoiding an on-prefixed color binding.
+    property alias onAccent: theme.accentText
 
     readonly property color background: dark ? "#303030" : "#FFFFFF"
     readonly property color surface: dark ? "#383838" : "#F7F7F7"

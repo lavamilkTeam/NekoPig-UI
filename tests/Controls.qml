@@ -10,6 +10,7 @@ Basic.ApplicationWindow {
     visible: true
     property int clicks: 0
     property color accent: NP.Theme.accent
+    property color legacyAccentText: NP.Theme.onAccent
     property int closeRequests: 0
     property int minimizeRequests: 0
     property int maximizeRequests: 0

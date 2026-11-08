@@ -69,6 +69,14 @@ class ControlsTest(unittest.TestCase):
         self.assertEqual(self.window.property("restoreRequests"), 1)
         self.assertFalse(self.window.property("testMaximized"))
 
+    def test_button_foreground_tracks_theme(self):
+        button = self.window.findChild(QQuickItem, "button")
+        label = button.property("contentItem")
+        for dark, expected in ((False, "#ffffff"), (True, "#303030")):
+            QMetaObject.invokeMethod(self.window, "setDark", Q_ARG(bool, dark))
+            self.assertEqual(label.property("color").name(), expected)
+            self.assertEqual(self.window.property("legacyAccentText").name(), expected)
+
     def test_window_button_keyboard_and_disabled_group(self):
         button = self.window.findChild(QQuickItem, "standaloneClose")
         self.assertEqual(button.property("text"), "Close")

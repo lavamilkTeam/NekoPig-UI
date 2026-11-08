@@ -17,7 +17,7 @@ Basic.Button {
     contentItem: Text {
         text: control.text
         font: control.font
-        color: control.enabled ? Theme.onAccent : Theme.mutedText
+        color: control.enabled ? Theme.accentText : Theme.mutedText
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         elide: Text.ElideRight
@@ -30,6 +30,6 @@ Basic.Button {
             : control.hovered ? Qt.darker(Theme.accent, 1.08)
             : Theme.accent
         border.width: control.visualFocus ? 2 : 0
-        border.color: Theme.onAccent
+        border.color: Theme.accentText
     }
 }
