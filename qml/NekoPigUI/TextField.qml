@@ -8,7 +8,7 @@ Basic.TextField {
     property bool invalid: false
 
     implicitWidth: 240
-    implicitHeight: Math.max(Theme.controlHeight, implicitContentHeight + topPadding + bottomPadding)
+    implicitHeight: Math.max(Theme.controlHeight, contentHeight + topPadding + bottomPadding)
     leftPadding: Theme.padding
     rightPadding: Theme.padding
     topPadding: 10
