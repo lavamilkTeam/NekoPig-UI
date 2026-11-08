@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MODULE = ROOT / "qml" / "NekoPigUI"
-ALLOWED_IMPORTS = {"QtQuick", "QtQuick.Controls.Basic"}
+ALLOWED_IMPORTS = {"QtQuick", "QtQuick.Controls.Basic", "QtQuick.Shapes"}
 
 
 def main() -> int:

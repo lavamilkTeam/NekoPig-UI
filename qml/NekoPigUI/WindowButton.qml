@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 import QtQuick
 import QtQuick.Controls.Basic as Basic
+import QtQuick.Shapes
 
 Basic.Button {
     id: control
@@ -40,22 +41,36 @@ Basic.Button {
             antialiasing: true
         }
 
-        Rectangle {
+        Shape {
             id: disc
             anchors.centerIn: parent
             anchors.alignWhenCentered: false
             width: control.diameter
             height: width
-            radius: width / 2
             antialiasing: true
+            preferredRendererType: Shape.CurveRenderer
 
             readonly property color baseColor: control.operation === WindowButton.Close
                 ? Theme.windowClose : control.operation === WindowButton.Minimize
                 ? Theme.windowMinimize : Theme.windowMaximize
 
-            color: !control.enabled ? Theme.disabled
+            readonly property color color: !control.enabled ? Theme.disabled
                 : control.down ? Qt.darker(baseColor, 1.2)
                 : control.hovered ? Qt.darker(baseColor, 1.08) : baseColor
+
+            ShapePath {
+                strokeColor: "transparent"
+                fillColor: disc.color
+
+                PathAngleArc {
+                    centerX: disc.width / 2
+                    centerY: disc.height / 2
+                    radiusX: disc.width / 2
+                    radiusY: disc.height / 2
+                    startAngle: 0
+                    sweepAngle: 360
+                }
+            }
         }
     }
 
@@ -66,16 +81,16 @@ Basic.Button {
             id: glyph
             anchors.centerIn: parent
             anchors.alignWhenCentered: false
-            // Keep the symbol extent even in device pixels to avoid one-sided raster rounding.
-            readonly property real pixelRatio: Screen.devicePixelRatio
-            width: Math.max(2, Math.round(control.diameter * 0.45 * pixelRatio / 2) * 2) / pixelRatio
+            // The software renderer rounds local rectangle sizes before applying display scaling.
+            // Even extents and integral stroke widths keep both sides around the same center.
+            width: Math.max(2, Math.round(control.diameter * 0.45 / 2) * 2)
             height: width
 
             Rectangle {
                 anchors.centerIn: parent
                 anchors.alignWhenCentered: false
                 width: glyph.width
-                height: 1.5
+                height: 2
                 radius: height / 2
                 color: "#000000"
                 antialiasing: true
@@ -93,7 +108,7 @@ Basic.Button {
                         anchors.centerIn: parent
                         anchors.alignWhenCentered: false
                         width: stroke.width
-                        height: 1.5
+                        height: 2
                         radius: height / 2
                         rotation: 45
                         color: "#000000"
