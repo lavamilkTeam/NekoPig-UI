@@ -14,6 +14,9 @@ QtObject {
     readonly property color border: "#858585"
     readonly property color disabled: dark ? "#414141" : "#EDEDED"
     readonly property color danger: dark ? "#FFACAC" : "#B42332"
+    readonly property color windowClose: "#FF5F57"
+    readonly property color windowMinimize: "#FF9F0A"
+    readonly property color windowMaximize: "#28C840"
 
     readonly property int controlHeight: 44
     readonly property int radius: 10

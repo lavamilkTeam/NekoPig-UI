@@ -56,10 +56,47 @@ class ControlsTest(unittest.TestCase):
         ))
         self.assertNotEqual(self.window.property("accent"), before)
 
+    def test_window_controls_requests_and_restore(self):
+        QTest.mouseClick(self.window, Qt.LeftButton, pos=QPoint(36, 246))
+        self.assertEqual(self.window.property("closeRequests"), 1)
+        self.assertTrue(self.window.isVisible())
+        QTest.mouseClick(self.window, Qt.LeftButton, pos=QPoint(70, 246))
+        self.assertEqual(self.window.property("minimizeRequests"), 1)
+        QTest.mouseClick(self.window, Qt.LeftButton, pos=QPoint(104, 246))
+        self.assertEqual(self.window.property("maximizeRequests"), 1)
+        self.assertTrue(self.window.property("testMaximized"))
+        QTest.mouseClick(self.window, Qt.LeftButton, pos=QPoint(104, 246))
+        self.assertEqual(self.window.property("restoreRequests"), 1)
+        self.assertFalse(self.window.property("testMaximized"))
+
+    def test_window_button_keyboard_and_disabled_group(self):
+        button = self.window.findChild(QQuickItem, "standaloneClose")
+        self.assertEqual(button.property("text"), "Close")
+        button.forceActiveFocus()
+        QTest.keyClick(self.window, Qt.Key_Space)
+        self.assertEqual(self.window.property("closeRequests"), 1)
+        controls = self.window.findChild(QQuickItem, "windowControls")
+        controls.setEnabled(False)
+        for x in (36, 70, 104):
+            QTest.mouseClick(self.window, Qt.LeftButton, pos=QPoint(x, 246))
+        self.assertEqual(self.window.property("closeRequests"), 1)
+        self.assertEqual(self.window.property("minimizeRequests"), 0)
+        self.assertEqual(self.window.property("maximizeRequests"), 0)
+
     def test_gallery_loads(self):
         self.engine.load(QUrl.fromLocalFile(str(ROOT / "gallery" / "Main.qml")))
         self.assertEqual(len(self.engine.rootObjects()), 2)
-        self.engine.rootObjects()[1].close()
+        gallery = self.engine.rootObjects()[1]
+        self.assertTrue(QTest.qWaitForWindowExposed(gallery))
+        previews = ROOT / "build" / "previews"
+        previews.mkdir(parents=True, exist_ok=True)
+        for dark, name in ((False, "light"), (True, "dark")):
+            QMetaObject.invokeMethod(self.window, "setDark", Q_ARG(bool, dark))
+            QTest.qWait(100)
+            image = gallery.grabWindow()
+            self.assertFalse(image.isNull())
+            self.assertTrue(image.save(str(previews / f"gallery-{name}.png")))
+        gallery.close()
 
 
 if __name__ == "__main__":

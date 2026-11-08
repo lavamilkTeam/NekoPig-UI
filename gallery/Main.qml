@@ -21,10 +21,24 @@ Basic.ApplicationWindow {
         anchors.margins: 24
         spacing: NP.Theme.spacing
 
-        Basic.Label {
-            text: "NekoPigUI"
-            color: NP.Theme.text
-            font.pixelSize: 28
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: NP.Theme.spacing
+
+            NP.WindowControls {
+                maximized: window.visibility === Window.Maximized
+                onCloseRequested: window.close()
+                onMinimizeRequested: window.showMinimized()
+                onMaximizeRequested: window.showMaximized()
+                onRestoreRequested: window.showNormal()
+            }
+
+            Basic.Label {
+                Layout.fillWidth: true
+                text: "NekoPigUI"
+                color: NP.Theme.text
+                font.pixelSize: 28
+            }
         }
 
         NP.CheckBox {

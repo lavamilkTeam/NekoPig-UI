@@ -32,3 +32,9 @@ jobs:
         run: pyside6-qmllint -I qml qml/NekoPigUI/*.qml gallery/Main.qml tests/Controls.qml
       - name: Check public controls and gallery
         run: python -m unittest discover -s tests -v
+      - name: Upload gallery previews
+        uses: actions/upload-artifact@v4
+        with:
+          name: gallery-previews
+          path: build/previews/*.png
+          if-no-files-found: error

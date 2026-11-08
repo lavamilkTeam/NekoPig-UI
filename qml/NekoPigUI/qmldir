@@ -4,3 +4,5 @@ Button 1.0 Button.qml
 TextField 1.0 TextField.qml
 CheckBox 1.0 CheckBox.qml
 Card 1.0 Card.qml
+WindowButton 1.0 WindowButton.qml
+WindowControls 1.0 WindowControls.qml
