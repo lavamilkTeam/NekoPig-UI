@@ -4,15 +4,15 @@ import QtQuick
 
 QtObject {
     property bool dark: false
-    property color accent: dark ? "#F5A7BC" : "#9F365D"
-    property color onAccent: dark ? "#38212A" : "#FFFFFF"
+    property color accent: dark ? "#FFFFFF" : "#303030"
+    property color onAccent: dark ? "#303030" : "#FFFFFF"
 
-    readonly property color background: dark ? "#201C20" : "#FFF8FA"
-    readonly property color surface: dark ? "#2C252B" : "#FFFFFF"
-    readonly property color text: dark ? "#F8EBF0" : "#35262E"
-    readonly property color mutedText: dark ? "#C6B4BF" : "#76616D"
-    readonly property color border: dark ? "#705C69" : "#A18B98"
-    readonly property color disabled: dark ? "#40343C" : "#EADFE5"
+    readonly property color background: dark ? "#303030" : "#FFFFFF"
+    readonly property color surface: dark ? "#383838" : "#F7F7F7"
+    readonly property color text: dark ? "#FFFFFF" : "#303030"
+    readonly property color mutedText: dark ? "#BFBFBF" : "#6B6B6B"
+    readonly property color border: "#858585"
+    readonly property color disabled: dark ? "#414141" : "#EDEDED"
     readonly property color danger: dark ? "#FFACAC" : "#B42332"
 
     readonly property int controlHeight: 44

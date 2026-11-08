@@ -27,9 +27,9 @@ Basic.Button {
         radius: Theme.radius
         color: !control.enabled ? Theme.disabled
             : control.down ? Qt.darker(Theme.accent, 1.15)
-            : control.hovered ? Qt.lighter(Theme.accent, 1.08)
+            : control.hovered ? Qt.darker(Theme.accent, 1.08)
             : Theme.accent
         border.width: control.visualFocus ? 2 : 0
-        border.color: Theme.text
+        border.color: Theme.onAccent
     }
 }

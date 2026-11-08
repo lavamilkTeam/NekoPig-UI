@@ -22,7 +22,8 @@ Basic.CheckBox {
         color: !control.enabled ? Theme.disabled
             : control.checkState !== Qt.Unchecked ? Theme.accent : Theme.surface
         border.width: control.visualFocus ? 2 : 1
-        border.color: control.visualFocus ? Theme.accent : Theme.border
+        border.color: !control.visualFocus ? Theme.border
+            : control.checkState === Qt.Unchecked ? Theme.accent : Theme.onAccent
 
         Text {
             anchors.centerIn: parent
