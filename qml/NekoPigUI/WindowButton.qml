@@ -81,38 +81,52 @@ Basic.Button {
             id: glyph
             anchors.centerIn: parent
             anchors.alignWhenCentered: false
-            // The software renderer rounds local rectangle sizes before applying display scaling.
-            // Even extents and integral stroke widths keep both sides around the same center.
+            // Keep the square outline symmetric on the local pixel grid.
             width: Math.max(2, Math.round(control.diameter * 0.45 / 2) * 2)
             height: width
 
-            Rectangle {
-                anchors.centerIn: parent
-                anchors.alignWhenCentered: false
-                width: glyph.width
-                height: 2
-                radius: height / 2
-                color: "#000000"
+            Shape {
+                anchors.fill: parent
                 antialiasing: true
+                preferredRendererType: Shape.CurveRenderer
                 visible: control.operation === WindowButton.Minimize
+
+                ShapePath {
+                    strokeColor: "#000000"
+                    strokeWidth: 2
+                    capStyle: ShapePath.RoundCap
+                    fillColor: "transparent"
+                    startX: 1
+                    startY: glyph.height / 2
+
+                    PathLine {
+                        x: glyph.width - 1
+                        y: glyph.height / 2
+                    }
+                }
             }
 
             Item {
                 anchors.fill: parent
                 visible: control.operation === WindowButton.Close
 
-                component DiagonalStroke: Item {
+                component DiagonalStroke: Shape {
                     id: stroke
+                    antialiasing: true
+                    preferredRendererType: Shape.CurveRenderer
 
-                    Rectangle {
-                        anchors.centerIn: parent
-                        anchors.alignWhenCentered: false
-                        width: stroke.width
-                        height: 2
-                        radius: height / 2
-                        rotation: 45
-                        color: "#000000"
-                        antialiasing: true
+                    ShapePath {
+                        strokeColor: "#000000"
+                        strokeWidth: 2
+                        capStyle: ShapePath.RoundCap
+                        fillColor: "transparent"
+                        startX: 1
+                        startY: 1
+
+                        PathLine {
+                            x: stroke.width - 1
+                            y: stroke.height - 1
+                        }
                     }
                 }
 
