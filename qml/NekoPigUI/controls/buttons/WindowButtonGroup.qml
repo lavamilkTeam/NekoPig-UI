@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 import QtQuick
+import NekoPigUI 1.0 as NP
 
 Row {
     id: controls
 
     property bool maximized: false
 
+    // 只发出操作请求，具体窗口行为由应用层处理
     signal closeRequested()
     signal minimizeRequested()
     signal maximizeRequested()
@@ -13,18 +15,18 @@ Row {
 
     spacing: 2
 
-    WindowButton {
-        operation: WindowButton.Close
+    NP.WindowButton {
+        operation: NP.WindowButton.Close
         onClicked: controls.closeRequested()
     }
 
-    WindowButton {
-        operation: WindowButton.Minimize
+    NP.WindowButton {
+        operation: NP.WindowButton.Minimize
         onClicked: controls.minimizeRequested()
     }
 
-    WindowButton {
-        operation: WindowButton.Maximize
+    NP.WindowButton {
+        operation: NP.WindowButton.Maximize
         maximized: controls.maximized
         onClicked: {
             if (controls.maximized)

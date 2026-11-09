@@ -34,7 +34,7 @@ jobs:
       - name: Check module boundaries
         run: python tools/check_boundaries.py
       - name: Check QML
-        run: pyside6-qmllint -I qml qml/NekoPigUI/*.qml gallery/Main.qml tests/Controls.qml
+        run: find qml/NekoPigUI gallery tests -name '*.qml' -print0 | xargs -0 pyside6-qmllint -I qml
       - name: Check public controls and gallery
         run: python -m unittest discover -s tests -v
       - name: Upload gallery previews

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 import QtQuick
+import NekoPigUI 1.0 as NP
 import QtQuick.Controls.Basic as Basic
 import QtQuick.Shapes
 
@@ -23,9 +24,11 @@ Basic.Button {
         : maximized ? qsTr("Restore") : qsTr("Maximize")
     Accessible.name: text
 
-    Basic.ToolTip.visible: hovered
-    Basic.ToolTip.delay: 600
-    Basic.ToolTip.text: text
+    NP.ToolTip {
+        visible: control.hovered && control.enabled
+        delay: 600
+        text: control.text
+    }
 
     background: Item {
         Rectangle {
@@ -35,7 +38,7 @@ Basic.Button {
             height: width
             radius: width / 2
             color: "transparent"
-            border.color: Theme.text
+            border.color: NP.Theme.text
             border.width: 1
             visible: control.visualFocus
             antialiasing: true
@@ -51,10 +54,10 @@ Basic.Button {
             preferredRendererType: Shape.CurveRenderer
 
             readonly property color baseColor: control.operation === WindowButton.Close
-                ? Theme.windowClose : control.operation === WindowButton.Minimize
-                ? Theme.windowMinimize : Theme.windowMaximize
+                ? NP.Theme.windowClose : control.operation === WindowButton.Minimize
+                ? NP.Theme.windowMinimize : NP.Theme.windowMaximize
 
-            readonly property color color: !control.enabled ? Theme.disabled
+            readonly property color color: !control.enabled ? NP.Theme.disabled
                 : control.down ? Qt.darker(baseColor, 1.2)
                 : control.hovered ? Qt.darker(baseColor, 1.08) : baseColor
 
@@ -81,7 +84,7 @@ Basic.Button {
             id: glyph
             anchors.centerIn: parent
             anchors.alignWhenCentered: false
-            // Keep the square outline symmetric on the local pixel grid.
+            // 使用偶数尺寸，让方形轮廓在局部像素网格上保持对称
             width: Math.max(2, Math.round(control.diameter * 0.45 / 2) * 2)
             height: width
 
