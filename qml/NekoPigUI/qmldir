@@ -1,8 +1,29 @@
 module NekoPigUI
-singleton Theme 1.0 Theme.qml
-Button 1.0 Button.qml
-TextField 1.0 TextField.qml
-CheckBox 1.0 CheckBox.qml
-Card 1.0 Card.qml
-WindowButton 1.0 WindowButton.qml
-WindowControls 1.0 WindowControls.qml
+internal SelectionRipple impl/SelectionRipple.qml
+singleton Theme 1.0 theme/Theme.qml
+Button 1.0 controls/buttons/Button.qml
+TextField 1.0 controls/TextField.qml
+TextArea 1.0 controls/TextArea.qml
+CheckBox 1.0 controls/CheckBox.qml
+RadioButton 1.0 controls/RadioButton.qml
+Switch 1.0 controls/Switch.qml
+Slider 1.0 controls/Slider.qml
+SpinBox 1.0 controls/SpinBox.qml
+ComboBox 1.0 controls/ComboBox.qml
+Card 1.0 containers/Card.qml
+WindowButton 1.0 controls/buttons/WindowButton.qml
+WindowButtonGroup 1.0 controls/buttons/WindowButtonGroup.qml
+ProgressBar 1.0 controls/ProgressBar.qml
+BusyIndicator 1.0 controls/BusyIndicator.qml
+ScrollBar 1.0 controls/ScrollBar.qml
+ScrollView 1.0 containers/ScrollView.qml
+TabButton 1.0 controls/buttons/TabButton.qml
+DialogButtonBox 1.0 controls/buttons/DialogButtonBox.qml
+TabBar 1.0 navigation/TabBar.qml
+Menu 1.0 navigation/Menu.qml
+MenuItem 1.0 navigation/MenuItem.qml
+MenuSeparator 1.0 navigation/MenuSeparator.qml
+Popup 1.0 overlays/Popup.qml
+Dialog 1.0 overlays/Dialog.qml
+Drawer 1.0 overlays/Drawer.qml
+ToolTip 1.0 overlays/ToolTip.qml

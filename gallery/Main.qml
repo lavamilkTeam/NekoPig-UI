@@ -6,15 +6,13 @@ import NekoPigUI 1.0 as NP
 
 Basic.ApplicationWindow {
     id: window
-    width: 720
-    height: 540
-    minimumWidth: 360
+    width: 800
+    height: 760
+    minimumWidth: 420
     minimumHeight: 480
     visible: true
     title: "NekoPigUI Gallery"
     color: NP.Theme.background
-
-    property int clickCount: 0
 
     ColumnLayout {
         anchors.fill: parent
@@ -24,63 +22,42 @@ Basic.ApplicationWindow {
         RowLayout {
             Layout.fillWidth: true
             spacing: NP.Theme.spacing
-
-            NP.WindowControls {
+            NP.WindowButtonGroup {
                 maximized: window.visibility === Window.Maximized
                 onCloseRequested: window.close()
                 onMinimizeRequested: window.showMinimized()
                 onMaximizeRequested: window.showMaximized()
                 onRestoreRequested: window.showNormal()
             }
-
             Basic.Label {
-                Layout.fillWidth: true
                 text: "NekoPigUI"
                 color: NP.Theme.text
-                font.pixelSize: 28
+                font.pixelSize: 24
+                Layout.fillWidth: true
+            }
+            NP.Switch {
+                text: "深色"
+                checked: NP.Theme.dark
+                onToggled: NP.Theme.dark = checked
             }
         }
 
-        NP.CheckBox {
-            text: "Dark theme"
-            checked: NP.Theme.dark
-            onToggled: NP.Theme.dark = checked
-        }
-
-        NP.Card {
+        NP.TabBar {
+            id: navigation
+            objectName: "galleryTabs"
             Layout.fillWidth: true
-
-            contentItem: ColumnLayout {
-                spacing: NP.Theme.spacing
-
-                Basic.Label {
-                    text: "Name"
-                    color: NP.Theme.text
-                }
-
-                NP.TextField {
-                    Layout.fillWidth: true
-                    placeholderText: "NekoPig"
-                    Accessible.name: "Name"
-                }
-
-                NP.CheckBox {
-                    text: "Enable notifications"
-                    checked: true
-                }
-
-                NP.Button {
-                    text: "Click count: " + window.clickCount
-                    onClicked: window.clickCount += 1
-                }
-
-                NP.Button {
-                    text: "Disabled"
-                    enabled: false
-                }
-            }
+            NP.TabButton { text: "基础控件" }
+            NP.TabButton { text: "状态与滚动" }
+            NP.TabButton { text: "弹层与菜单" }
         }
 
-        Item { Layout.fillHeight: true }
+        StackLayout {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            currentIndex: navigation.currentIndex
+            BasicControls { }
+            StatusControls { }
+            OverlayControls { }
+        }
     }
 }
